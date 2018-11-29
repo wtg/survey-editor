@@ -1,7 +1,7 @@
 <template>
   <section class="section">
-    <h1 class="title">WTG Survey Page Editor</h1>
     <div class="container">
+    <h1 class="title">WTG Survey Page Editor</h1>
       <div class="columns">
         <div class="column is-4">
           <question-creator v-on:save="closeEdit" v-if="currentlyEditing !== -1" :question="page.questions[currentlyEditing]"/>
