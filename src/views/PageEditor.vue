@@ -2,22 +2,24 @@
   <section class="section">
     <h1 class="title">WTG Survey Page Editor</h1>
     <div class="container">
-        <div class="field is-fullwidth has-text-right">
-          <div class="control is-expanded has-text-right">
-              <button class="button is-info" @click="newQuestion">New Question</button>
-          </div>
-      </div>
       <div class="columns">
         <div class="column is-4">
           <question-creator v-on:save="closeEdit" v-if="currentlyEditing !== -1" :question="page.questions[currentlyEditing]"/>
         </div>
         <div class="column">
-          <h1 class="title">Preview: </h1>
-          <div class="field">
+          <div class="field is-fullwidth has-text-centered has-addons is-flex-right">
             <div class="control">
-              <button @click="save" class="button">Download</button>
+                <button class="button is-success" @click="newQuestion">New Question</button>
+            </div>
+            <div class="control">
+              <button @click="downloadPage" class="button">Download Page</button>
+            </div>
+            <div class="control">
+              <button @click="save" class="button is-info">Save Page</button>
             </div>
           </div>
+          <h1 class="title">Preview: </h1>
+
           <question-preview @edit="edit" @delete="deleteQuestion" v-for="(myQuestion, idx) in page.questions" :key="myQuestion.id" :selected="idx === currentlyEditing" :question="myQuestion" :index="idx"/>
         </div>
       </div>
@@ -106,8 +108,12 @@ export default Vue.extend({
 
       document.body.removeChild(element);
     },
-    save(){
+    downloadPage(){
       this.download('survey.json', JSON.stringify(this.page.asSurveyJSON()));
+    },
+    save() {
+      StorageProvider.saveSurvey(this.survey.name, this.survey)
+      this.$router.push('/')      
     },
     closeEdit(){
       if(this.currentlyEditing === this.page.questions.length - 1){
@@ -137,3 +143,8 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" scoped>
+  .is-flex-right{
+    justify-content: flex-end;
+  }
+</style>
