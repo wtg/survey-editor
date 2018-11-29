@@ -44,7 +44,7 @@
                 </label>
             </div>
             <label v-if="question.type != 1" class="label">Options</label>
-            <div class="field">
+            <div v-if="question.type != 1" class="field">
                 <button class="button is-success" @click="question.options.push('')">Add</button>
             </div>
             <div v-for="(option, idx) in question.options" :key="option" class="field has-addons">

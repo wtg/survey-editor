@@ -1,5 +1,5 @@
 <template>
-    <div class="questionpreview box">
+    <div class="questionpreview notification" :class="{'has-blue-border': this.selected}">
         <div class="field has-addons is-pulled-right">
             <div class="control">
                 <button @click="$emit('edit', index);" v-if="index != -1" class="button is-info">Edit</button>
@@ -52,6 +52,10 @@ export default Vue.extend({
         index: {
             type: Number,
             default: () => -1
+        },
+        selected: {
+            type: Boolean,
+            default: () => false
         }
     },
 })
@@ -60,4 +64,10 @@ export default Vue.extend({
     .questionpreview {
         margin: 20px;
     }
+    .has-blue-border{
+        border-style: solid;
+        border-width: 2px;
+        border-color: hsl(204, 86%, 53%);
+    }
 </style>
+

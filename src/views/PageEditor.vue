@@ -2,19 +2,9 @@
   <section class="section">
     <h1 class="title">WTG Survey Page Editor</h1>
     <div class="container">
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <div class="select is-fullwidth">
-                <select v-model="newQuestionType">
-                    <option :value='0'>Radio</option>
-                    <option :value='1'>Text</option>
-                    <option :value='2'>Select</option>
-                    <option :value='3'>Checkbox</option>
-                </select>
-            </div>
-          </div>
-          <div class="control">
-              <button class="button is-info" @click="newQuestion">Add</button>
+        <div class="field is-fullwidth has-text-right">
+          <div class="control is-expanded has-text-right">
+              <button class="button is-info" @click="newQuestion">New Question</button>
           </div>
       </div>
       <div class="columns">
@@ -28,7 +18,7 @@
               <button @click="save" class="button">Download</button>
             </div>
           </div>
-          <question-preview @edit="edit" @delete="deleteQuestion" v-for="(myQuestion, idx) in page.questions" :key="myQuestion.id" :question="myQuestion" :index="idx"/>
+          <question-preview @edit="edit" @delete="deleteQuestion" v-for="(myQuestion, idx) in page.questions" :key="myQuestion.id" :selected="idx === currentlyEditing" :question="myQuestion" :index="idx"/>
         </div>
       </div>
     </div>
@@ -41,6 +31,8 @@ import QuestionCreator from '@/components/QuestionCreator.vue';
 import QuestionPreview from '@/components/QuestionPreview.vue';
 import Question,{ QuestionType } from '@/assets/question';
 import Page from '@/assets/page';
+import StorageProvider from '@/assets/serviceproviders/storage.service';
+import Survey from '@/assets/survey';
 
 export default Vue.extend({
   name: 'home',
@@ -51,19 +43,53 @@ export default Vue.extend({
   data() {
     return {
       currentlyEditing: -1,
-      page: new Page(),
+      pageNum: 0,
       newQuestionType: 0,
       question: new Question("", "", QuestionType.radio, [],true),
+      survey: new Survey()
     } as {
       question: Question;
-      page: Page;
+      pageNum: number;
       currentlyEditing: number;
       newQuestionType: QuestionType;
+      survey: Survey;
+    }
+  },
+  computed: {
+    page(): Page{
+      return this.survey.pages[this.pageNum];
+    },
+    currentlyEditedQuestion(): Question {
+      return this.page.questions[this.currentlyEditing];
+    }
+  },
+  watch: {
+    'page.questions'(){
+      StorageProvider.saveSurvey(this.survey.name, this.survey)
+    },
+    'currentlyEditedQuestion'(){
+      console.log('this?')
     }
   },
   methods: {
     newQuestion(){
-      const x = new Question("","",this.newQuestionType,[],false);
+      let x: Question;
+
+      if(this.page.questions.length > 0){
+        let id = this.page.questions[this.page.questions.length - 1].id;
+        let idNum = Number(id[id.length - 1]);
+        let newID: string;
+        if(Number.isNaN(idNum)){
+          idNum = 0
+          newID = id + Number(idNum)
+        }else{
+          newID = id.substring(0, id.length-1) + (Number(idNum) + 1) + id.substring(id.length);
+        }
+        x = new Question(newID,"",this.newQuestionType,[],false);
+      }else{
+        x = new Question("","",this.newQuestionType,[],false);        
+      }
+
       x.setDefaultOptions();
       this.page.questions.push(x);
       this.currentlyEditing = this.page.questions.length - 1;
@@ -84,8 +110,13 @@ export default Vue.extend({
       this.download('survey.json', JSON.stringify(this.page.asSurveyJSON()));
     },
     closeEdit(){
-      this.currentlyEditing = -1;
-      this.newQuestion();
+      if(this.currentlyEditing === this.page.questions.length - 1){
+        this.currentlyEditing = -1;
+        this.newQuestion();
+      }else{
+        this.currentlyEditing++;
+      }
+
     },
     edit(idx: number){
       this.currentlyEditing = idx;
@@ -97,6 +128,12 @@ export default Vue.extend({
   },
   mounted (){
     this.question.setDefaultOptions();
+    if(StorageProvider.getSurveyByName(this.$route.params.name) === undefined){
+      console.log('error')
+    }else{
+      this.survey = (StorageProvider.getSurveyByName(this.$route.params.name) as Survey)
+    }
+    this.pageNum = Number(this.$route.params.num);
   }
 });
 </script>
