@@ -10,10 +10,10 @@ export default new Vuex.Store({
     survey: new Survey(),
   } as {
     surveys: Survey[]
-    survey: Survey
+    survey: Survey,
   },
   mutations: {
-    
+
   },
   actions: {
 

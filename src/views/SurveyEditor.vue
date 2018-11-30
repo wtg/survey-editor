@@ -47,15 +47,15 @@
 </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import Survey from '@/assets/survey'
+import Vue from 'vue';
+import Survey from '@/assets/survey';
 import Page from '@/assets/page';
 import StorageProvider from '@/assets/serviceproviders/storage.service';
 
 (window as any).sp = StorageProvider;
 
 export default Vue.extend({
-    data () {
+    data() {
         return {
             survey: new Survey(),
             pageToEdit: new Page(),
@@ -64,40 +64,40 @@ export default Vue.extend({
             survey: Survey;
             pageToEdit: Page;
             deleteTimer: Boolean;
-        }
+        };
     },
     methods: {
-        addPage(){
-            this.survey.pages.push(new Page())
-            StorageProvider.saveSurvey(this.survey.name, this.survey)
+        addPage() {
+            this.survey.pages.push(new Page());
+            StorageProvider.saveSurvey(this.survey.name, this.survey);
         },
-        deletePage(idx: number){
+        deletePage(idx: number) {
             this.deleteTimer = true;
-            this.survey.pages.splice(idx,1);
+            this.survey.pages.splice(idx, 1);
         },
-        purgePage(){
+        purgePage() {
             setTimeout(() => {
                 this.deleteTimer = false;
                 StorageProvider.saveSurvey(this.survey.name, this.survey);
-            }, 2000)
+            }, 2000);
         },
-        undo(){
+        undo() {
             this.deleteTimer = false;
-            if(StorageProvider.getSurveyByName(this.survey.name) !== undefined){
-                this.survey = (StorageProvider.getSurveyByName(this.survey.name) as Survey)
-            }else{
-                console.log("error undo")
+            if (StorageProvider.getSurveyByName(this.survey.name) !== undefined) {
+                this.survey = (StorageProvider.getSurveyByName(this.survey.name) as Survey);
+            } else {
+                console.log('error undo');
             }
         },
-        setName(val: FocusEvent){
-            if(val.srcElement != null){
+        setName(val: FocusEvent) {
+            if (val.srcElement != null) {
                 StorageProvider.deleteSurvey(this.survey.name);
                 this.survey.name = val.srcElement.innerHTML;
                 StorageProvider.saveSurvey(this.survey.name, this.survey);
             }
         },
         download(filename: string, text: string) {
-            var element = document.createElement('a');
+            let element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
             element.setAttribute('download', filename);
 
@@ -108,12 +108,14 @@ export default Vue.extend({
 
             document.body.removeChild(element);
         },
-        save(){
-            this.download(this.survey.name +'.json', JSON.stringify(this.survey.toJSON()))
+        save() {
+            this.download(this.survey.name + '.json', JSON.stringify(this.survey.toJSON()));
+        },
+    },
+    mounted() {
+        if (StorageProvider.getSurveyByName(this.$route.params.name) !== undefined) {
+            this.survey = (StorageProvider.getSurveyByName(this.$route.params.name) as Survey);
         }
     },
-    mounted(){
-        this.survey = StorageProvider.getSurveys()[0]
-    }
-})
+});
 </script>

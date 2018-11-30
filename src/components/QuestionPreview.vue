@@ -37,28 +37,28 @@
     </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import Question,{ QuestionType } from '@/assets/question';
+import Vue from 'vue';
+import Question, { QuestionType } from '@/assets/question';
 export default Vue.extend({
     props: {
         question: {
             type: Object as () => Question,
             default: () => {
-                let q = new Question("", "", QuestionType.radio, [],true);
+                const q = new Question('', '', QuestionType.radio, [], true);
                 q.setDefaultOptions();
                 return q;
             },
         },
         index: {
             type: Number,
-            default: () => -1
+            default: () => -1,
         },
         selected: {
             type: Boolean,
-            default: () => false
-        }
+            default: () => false,
+        },
     },
-})
+});
 </script>
 <style lang="scss" scoped>
     .questionpreview {

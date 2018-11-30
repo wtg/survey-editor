@@ -62,7 +62,7 @@
     </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import Question from '@/assets/question.ts';
 import { QuestionType } from '@/assets/question.ts';
 
@@ -71,27 +71,27 @@ export default Vue.extend({
         question: {
             type: Object as () => Question,
             default: () => {
-                let q = new Question("", "", QuestionType.radio, [],true);
+                const q = new Question('', '', QuestionType.radio, [], true);
                 q.setDefaultOptions();
                 return q;
             },
-        }
+        },
     },
     watch: {
-        'question.type' () {
-            this.question.setTypeAndDefaults(this.question.type)
-        }
+        'question.type'() {
+            this.question.setTypeAndDefaults(this.question.type);
+        },
     },
-    data(){
+    data() {
         return {
             questionType: QuestionType.radio,
             numOptions: 1,
         }as {
             questionType: QuestionType;
             numOptions: number;
-        }
+        };
     },
 
 
-})
+});
 </script>

@@ -1,11 +1,11 @@
-export enum QuestionType{
+export enum QuestionType {
     radio,
     text,
     select,
     checkbox,
 }
 
-export interface SurveyJSON{
+export interface SurveyJSON {
     id: string;
     question: string;
     type: string;
@@ -16,7 +16,7 @@ export interface SurveyJSON{
 }
 
 // Question represents a survey question, options, and type
-export default class Question{ 
+export default class Question {
     public id: string;
     public question: string;
     public type: QuestionType;
@@ -27,16 +27,16 @@ export default class Question{
     private defaultsSet: boolean = false;
 
     constructor(id: string, question: string, type: QuestionType, options: String[] | Number [],
-        required: boolean, showIfId?: string, showIfValue ?: string | number ){
+                required: boolean, showIfId?: string, showIfValue ?: string | number ) {
             this.id = id;
             this.question = question;
-            this.type = type; 
+            this.type = type;
             this.options = options;
             this.required = required;
             this.showIfId = showIfId;
             this.showIfValue = showIfValue;
         }
-    
+
     // Returns true if this question has had defaults set for its type
     public hasDefaultsSet(): boolean {
         return this.defaultsSet;
@@ -44,22 +44,22 @@ export default class Question{
 
     // sets the default options for the question type, returns true if set successfully
     // returns false if defaults have already been set
-    public setDefaultOptions(): boolean{
-        if(this.defaultsSet){
+    public setDefaultOptions(): boolean {
+        if (this.defaultsSet) {
             return false;
         }
         this.defaultsSet = true;
-        switch(this.type){
+        switch (this.type) {
             case QuestionType.radio: {
-                this.options = [1,2,3,4,5,6,7,8,9,10];
+                this.options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
                 break;
             }
             case QuestionType.checkbox: {
-                this.options = ["option one", "option two", "option three"];
+                this.options = ['option one', 'option two', 'option three'];
                 break;
             }
             case QuestionType.select: {
-                this.options = ["option one", "option two", "option three"];
+                this.options = ['option one', 'option two', 'option three'];
                 break;
             }
             case QuestionType.text: {
@@ -82,18 +82,18 @@ export default class Question{
         this.setDefaultOptions();
     }
 
-    public asSurveyJSON(): SurveyJSON{
+    public asSurveyJSON(): SurveyJSON {
         const typeToString = ['radio', 'text', 'select', 'checkbox'];
-        let ret: SurveyJSON = {
+        const ret: SurveyJSON = {
             id: this.id,
             question: this.question,
             type: typeToString[this.type],
             required: this.required,
-        }
-        if(this.type != QuestionType.text){
+        };
+        if (this.type != QuestionType.text) {
             ret.options = this.options;
         }
-        if (this.showIfId != '' && this.showIfId != undefined){
+        if (this.showIfId != '' && this.showIfId != undefined) {
             ret.show_if_id = this.showIfId;
             ret.show_if_value = this.showIfValue;
         }
