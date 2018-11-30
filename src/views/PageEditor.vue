@@ -62,7 +62,7 @@ export default Vue.extend({
       return this.survey.pages[this.pageNum];
     },
     currentlyEditedQuestion(): Question {
-      if (this.page != undefined) {
+      if (this.page !== undefined) {
         return this.page.questions[this.currentlyEditing];
       } else {
         return new Question('', '', QuestionType.radio, [], false);
@@ -142,9 +142,7 @@ export default Vue.extend({
   },
   mounted() {
     this.question.setDefaultOptions();
-    if (StorageProvider.getSurveyByName(this.$route.params.name) === undefined) {
-      console.log('error');
-    } else {
+    if (!StorageProvider.getSurveyByName(this.$route.params.name) === undefined) {
       this.survey = (StorageProvider.getSurveyByName(this.$route.params.name) as Survey);
     }
     this.pageNum = Number(this.$route.params.num);

@@ -9,7 +9,7 @@ export interface SurveyJSON {
     id: string;
     question: string;
     type: string;
-    options?: String[] | Number [];
+    options?: string[] | number [];
     required: boolean;
     show_if_id?: string | undefined;
     show_if_value?: string | number | undefined;
@@ -20,13 +20,13 @@ export default class Question {
     public id: string;
     public question: string;
     public type: QuestionType;
-    public options: String[] | Number [];
+    public options: string[] | number[];
     public required: boolean;
     public showIfId: string | undefined;
     public showIfValue: string | number | undefined;
     private defaultsSet: boolean = false;
 
-    constructor(id: string, question: string, type: QuestionType, options: String[] | Number [],
+    constructor(id: string, question: string, type: QuestionType, options: string[] | number [],
                 required: boolean, showIfId?: string, showIfValue ?: string | number ) {
             this.id = id;
             this.question = question;
@@ -90,10 +90,10 @@ export default class Question {
             type: typeToString[this.type],
             required: this.required,
         };
-        if (this.type != QuestionType.text) {
+        if (this.type !== QuestionType.text) {
             ret.options = this.options;
         }
-        if (this.showIfId != '' && this.showIfId != undefined) {
+        if (this.showIfId !== '' && this.showIfId !== undefined) {
             ret.show_if_id = this.showIfId;
             ret.show_if_value = this.showIfValue;
         }

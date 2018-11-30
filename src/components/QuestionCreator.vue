@@ -43,6 +43,9 @@
                     Required
                 </label>
             </div>
+            <div v-if="question.type !== 1" class="field has-text-right">
+                <button @click="$emit('save')" class="button is-info">Save Question</button>
+            </div>
             <label v-if="question.type != 1" class="label">Options</label>
             <div v-if="question.type != 1" class="field">
                 <button class="button is-success" @click="question.options.push('')">Add</button>

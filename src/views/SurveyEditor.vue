@@ -63,7 +63,7 @@ export default Vue.extend({
         }as {
             survey: Survey;
             pageToEdit: Page;
-            deleteTimer: Boolean;
+            deleteTimer: boolean;
         };
     },
     methods: {
@@ -85,8 +85,6 @@ export default Vue.extend({
             this.deleteTimer = false;
             if (StorageProvider.getSurveyByName(this.survey.name) !== undefined) {
                 this.survey = (StorageProvider.getSurveyByName(this.survey.name) as Survey);
-            } else {
-                console.log('error undo');
             }
         },
         setName(val: FocusEvent) {
@@ -97,7 +95,7 @@ export default Vue.extend({
             }
         },
         download(filename: string, text: string) {
-            let element = document.createElement('a');
+            const element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
             element.setAttribute('download', filename);
 
