@@ -17,6 +17,9 @@
                         <div class="control">
                             <button @click="save" class="button">Download Survey</button>
                         </div>
+                        <div class="control">
+                            <button @click="save" class="button is-success">Save</button>
+                        </div>
                     </div>
                 </div>
             </div>

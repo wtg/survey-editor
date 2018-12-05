@@ -32,6 +32,14 @@
                     </select>
                 </div>
             </div>
+            <div v-if="this.question.type === 3" class="control">
+                <span style="margin-left: 10px;" v-for="option in this.question.options" :key="option">
+                    <label class="radio inline">
+                    <input type="checkbox">
+                        {{option}}
+                    </label>
+                </span>
+            </div>
         </div>
         <p v-if="this.question.showIfId != undefined && this.question.showIfId != ''" class="help">This shows if question: {{this.question.showIfId}} has value: {{this.question.showIfValue}}</p>
     </div>

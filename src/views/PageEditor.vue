@@ -7,9 +7,9 @@
           <div class="control">
               <button class="button is-success" @click="newQuestion">New Question</button>
           </div>
-          <div class="control">
+          <!-- <div class="control">
             <button @click="downloadPage" class="button">Download Page</button>
-          </div>
+          </div> -->
           <div class="control">
             <button @click="save" class="button is-info">Save Page</button>
           </div>
@@ -142,7 +142,7 @@ export default Vue.extend({
   },
   mounted() {
     this.question.setDefaultOptions();
-    if (!StorageProvider.getSurveyByName(this.$route.params.name) === undefined) {
+    if (StorageProvider.getSurveyByName(this.$route.params.name) !== undefined) {
       this.survey = (StorageProvider.getSurveyByName(this.$route.params.name) as Survey);
     }
     this.pageNum = Number(this.$route.params.num);
