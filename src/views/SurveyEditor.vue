@@ -5,7 +5,7 @@
             <div class="level">
                 <div class="level-left">
                     <span>
-                        <h1 class="title is-3">WTG Survey Editor</h1>
+                        <h1 class="title is-3">Survey Editor</h1>
                         <h2 class="subtitle is-5" @blur="setName" contenteditable="true">{{this.survey.name}}</h2>
                     </span>
                 </div>

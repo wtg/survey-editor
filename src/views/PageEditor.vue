@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div v-if="this.page != undefined" class="container">
-      <h1 class="title">WTG Survey Page Editor</h1>
+      <h1 class="title">Page Editor</h1>
       <h2 class="subtitle is-5" @blur="setName" contenteditable="true">{{this.page.name}}</h2>
         <div class="field is-fullwidth has-text-centered has-addons is-flex-right">
           <div class="control">

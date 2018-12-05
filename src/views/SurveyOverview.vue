@@ -2,7 +2,6 @@
 <div>
     <section class="section">
         <div class="container">
-
             <div class="modal" :class="{'is-active': this.loadSurveyModal}">
                 <div class="modal-background"></div>
                 <div class="modal-content">
@@ -31,8 +30,13 @@
             <div class="level">
                 <div class="level-left">
                     <span>
-                        <h1 class="title is-3">WTG Survey Editor</h1>
+                        <h1 class="title is-3">Survey Overview</h1>
                     </span>
+                </div>
+                <div class="level-right">
+                    <a href="https://webtech.union.rpi.edu" style="width: 100px;">
+                        <img src="@/assets/wtg.svg" />
+                    </a>
                 </div>
             </div>
             <div class="field is-fullwidth has-text-centered has-addons is-flex-right">
