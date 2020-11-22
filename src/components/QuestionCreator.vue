@@ -31,7 +31,10 @@
                 <div class="control is-expanded">
                     <input placeholder="question id" v-model="question.showIfId" type="text" class="input" />
                 </div>
-                <label class="label">Has Value</label>
+                <input type="radio" id="has_value" value="has_value" v-model="question.showIfRadio" checked>
+                <label for="has_value">Has value: </label><br>
+                <input type="radio" id="has_value_not" value="has_value_not" v-model="question.showIfRadio">
+                <label for="has_value_not">Does not have value: </label><br>
                 <div class="control is-expanded">
                     <input v-model="question.showIfValue" type="text" class="input" />
                 </div>  
