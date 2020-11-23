@@ -31,7 +31,7 @@
                 <div class="control is-expanded">
                     <input placeholder="question id" v-model="question.showIfId" type="text" class="input" />
                 </div>
-                <input type="radio" id="has_value" value="has_value" v-model="question.showIfRadio" checked>
+                <input type="radio" id="has_value" value="has_value" v-model="question.showIfRadio"xw>
                 <label for="has_value">Has value: </label><br>
                 <input type="radio" id="has_value_not" value="has_value_not" v-model="question.showIfRadio">
                 <label for="has_value_not">Does not have value: </label><br>
@@ -77,7 +77,7 @@ export default Vue.extend({
         question: {
             type: Object as () => Question,
             default: () => {
-                const q = new Question('', '', QuestionType.radio, [], true);
+                const q = new Question('', '', QuestionType.radio, [], true, 'has_value');
                 q.setDefaultOptions();
                 return q;
             },

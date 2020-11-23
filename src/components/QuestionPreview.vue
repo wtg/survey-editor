@@ -52,7 +52,7 @@ export default Vue.extend({
         question: {
             type: Object as () => Question,
             default: () => {
-                const q = new Question('', '', QuestionType.radio, [], true);
+                const q = new Question('', '', QuestionType.radio, [], true, 'has_value');
                 q.setDefaultOptions();
                 return q;
             },

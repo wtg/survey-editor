@@ -3,6 +3,7 @@ import Question, {SurveyJSON, QuestionType} from './question';
 export default class Page {
     public questions: Question[] = [];
     public name: string = '';
+    public showIfRadio: string = 'has_value';
 
     public deleteQuestion(idx: number) {
         this.questions.splice(idx, 1);
@@ -12,7 +13,14 @@ export default class Page {
         this.questions = [];
 
         for (let i = 0; i < json.length; i ++) {
-            this.questions.push(new Question(json[i].id, json[i].question, this.stringTypeToQuestionType(json[i].type), json[i].options === undefined ? [] : (json[i].options as string[] | number[]), json[i].required, json[i].show_if_id, json[i].show_if_value));
+            if (json[i].show_if_id !== '') {
+                if (json[i].show_if_value !== undefined && json[i].show_if_value !== '') {
+                    this.showIfRadio = 'has_value';
+                } else {
+                    this.showIfRadio = 'has_value_not';
+                }
+            }
+            this.questions.push(new Question(json[i].id, json[i].question, this.stringTypeToQuestionType(json[i].type), json[i].options === undefined ? [] : (json[i].options as string[] | number[]), json[i].required, this.showIfRadio, json[i].show_if_id, json[i].show_if_value));
         }
     }
 
