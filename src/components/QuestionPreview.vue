@@ -41,7 +41,7 @@
                 </span>
             </div>
         </div>
-        <p v-if="this.question.showIfId != undefined && this.question.showIfId != ''" class="help">This shows if question: {{this.question.showIfId}} has value: {{this.question.showIfValue}}</p>
+        <p v-if="this.question.showIfId != undefined && this.question.showIfId != ''" class="help">This shows if question: {{this.question.showIfId}} <span v-if="this.question.showIfRadio == 'has_value'">has value: </span><span v-if="this.question.showIfRadio == 'has_value_not'">does not has value: </span>{{this.question.showIfValue}}</p>
     </div>
 </template>
 <script lang="ts">

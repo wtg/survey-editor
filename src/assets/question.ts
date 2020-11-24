@@ -96,15 +96,14 @@ export default class Question {
         if (this.type !== QuestionType.text) {
             ret.options = this.options;
         }
-        if (this.showIfId !== '' && this.showIfId !== undefined) {
-            if (this.showIfRadio == 'has_value') {
+        if ((this.showIfId !== '') && (this.showIfId !== undefined)) {
+            if (this.showIfRadio !== 'has_value_not') {
                 ret.show_if_value = this.showIfValue;
             } else {
                 ret.show_if_value_not = this.showIfValue;
             }
             ret.show_if_id = this.showIfId;
         }
-
         return ret;
     }
 
