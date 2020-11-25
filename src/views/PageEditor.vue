@@ -47,7 +47,7 @@ export default Vue.extend({
       currentlyEditing: -1,
       pageNum: 0,
       newQuestionType: 0,
-      question: new Question('', '', QuestionType.radio, [], true),
+      question: new Question('', '', QuestionType.radio, [], true, 'has_value'),
       survey: new Survey(),
     } as {
       question: Question;
@@ -65,7 +65,7 @@ export default Vue.extend({
       if (this.page !== undefined) {
         return this.page.questions[this.currentlyEditing];
       } else {
-        return new Question('', '', QuestionType.radio, [], false);
+        return new Question('', '', QuestionType.radio, [], false, 'has_value');
       }
     },
   },
@@ -89,9 +89,9 @@ export default Vue.extend({
         } else {
           newID = id.substring(0, id.length - 1) + (Number(idNum) + 1) + id.substring(id.length);
         }
-        x = new Question(newID, '', this.newQuestionType, [], false);
+        x = new Question(newID, '', this.newQuestionType, [], false, 'has_value');
       } else {
-        x = new Question('', '', this.newQuestionType, [], false);
+        x = new Question('', '', this.newQuestionType, [], false, 'has_value');
       }
 
       x.setDefaultOptions();

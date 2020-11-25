@@ -13,6 +13,7 @@ export interface SurveyJSON {
     required: boolean;
     show_if_id?: string | undefined;
     show_if_value?: string | number | undefined;
+    show_if_value_not?: string | number | undefined;
 }
 
 // Question represents a survey question, options, and type
@@ -22,17 +23,19 @@ export default class Question {
     public type: QuestionType;
     public options: string[] | number[];
     public required: boolean;
+    public showIfRadio: string;
     public showIfId: string | undefined;
     public showIfValue: string | number | undefined;
     private defaultsSet: boolean = false;
 
     constructor(id: string, question: string, type: QuestionType, options: string[] | number [],
-                required: boolean, showIfId?: string, showIfValue ?: string | number ) {
+                required: boolean, showIfRadio: string, showIfId?: string, showIfValue ?: string | number ) {
             this.id = id;
             this.question = question;
             this.type = type;
             this.options = options;
             this.required = required;
+            this.showIfRadio = showIfRadio;
             this.showIfId = showIfId;
             this.showIfValue = showIfValue;
         }
@@ -93,11 +96,14 @@ export default class Question {
         if (this.type !== QuestionType.text) {
             ret.options = this.options;
         }
-        if (this.showIfId !== '' && this.showIfId !== undefined) {
+        if ((this.showIfId !== '') && (this.showIfId !== undefined)) {
+            if (this.showIfRadio !== 'has_value_not') {
+                ret.show_if_value = this.showIfValue;
+            } else {
+                ret.show_if_value_not = this.showIfValue;
+            }
             ret.show_if_id = this.showIfId;
-            ret.show_if_value = this.showIfValue;
         }
-
         return ret;
     }
 
